@@ -206,22 +206,32 @@
 @media (max-width: 1024px) {
     .wwa-content-grid {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2rem;
+        /* Reduced gap to save height */
         text-align: center;
     }
 
     .wwa-image-col {
         display: flex;
         justify-content: center;
+        height: auto;
     }
 
     .wwa-image-frame {
-        max-width: 500px;
-        height: 300px;
+        max-width: 100%;
+        height: 280px;
+        /* Reduced image height to make space */
+        position: relative;
+    }
+
+    /* Override absolute stacked on smaller layouts if using GSAP so it sizes properly */
+    .wwa-image-frame img {
+        display: block;
     }
 
     .wwa-text-col {
-        height: 400px;
+        height: 380px;
+        /* Match text height requirement without overflow */
     }
 
     .wwa-stacked-text {
@@ -235,18 +245,38 @@
 
 @media (max-width: 768px) {
     .wwa-pin-container {
-        padding: 4rem 0;
+        padding: 6rem 0 2rem;
+        /* Shift content slightly downwards */
     }
 
     .wwa-container {
-        padding: 0 2rem;
-    }
-
-    .wwa-bg-word {
-        font-size: 8rem;
+        padding: 0;
     }
 
     .wwa-header {
-        margin-bottom: 2rem;
+        padding: 0 1.5rem;
+        margin-bottom: 1.5rem;
+        /* Tighter header */
+    }
+
+    .wwa-main-title {
+        font-size: 2rem;
+    }
+
+    .wwa-text-col {
+        padding: 0 1.5rem;
+        height: 340px;
+        /* Squish text slightly more for small mobile */
+    }
+
+    .wwa-image-frame {
+        height: 240px;
+        /* Ensure image fits completely without being squished out of bounds */
+        border-radius: 0;
+        /* Can be square if touching edges or keep rounded if there is padding */
+    }
+
+    .wwa-bg-word {
+        font-size: 6rem;
     }
 }

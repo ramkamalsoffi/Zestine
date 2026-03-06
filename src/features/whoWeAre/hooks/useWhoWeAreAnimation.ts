@@ -21,47 +21,86 @@ export function useWhoWeAreAnimation(refs: AnimationRefs) {
 
             if (images.length === 0 || texts.length === 0) return;
 
-            // Setup initial states
-            // Image 0 is visible and at origin
-            gsap.set(images[0], { xPercent: 0, yPercent: 0, opacity: 1 });
-            // Text 0 is visible and centered
+            // Setup initial text states (shared across all breakpoints)
             gsap.set(texts[0], { opacity: 1, autoAlpha: 1, yPercent: -50, y: 0 });
-
-            // Image 1 and 2 are offscreen bottom right (e.g. x: 100%, y: 100%)
-            gsap.set(images.slice(1), { xPercent: 100, yPercent: 100 });
-            // Text 1 and 2 are hidden, slightly lower
             gsap.set(texts.slice(1), { opacity: 0, autoAlpha: 0, yPercent: -50, y: 40 });
 
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: pinContainerRef.current,
-                    start: 'top top',
-                    end: '+=3000', // How long the pin lasts (3x viewport height)
-                    scrub: 1,    // Smooth scrubbing
-                    pin: true,
-                    anticipatePin: 1
-                }
+            // Create matchMedia instance
+            let mm = gsap.matchMedia();
+
+            // ==========================================
+            // DESKTOP: Diagonal Entrance 
+            // ==========================================
+            mm.add("(min-width: 1025px)", () => {
+                // Setup images for desktop
+                gsap.set(images[0], { xPercent: 0, yPercent: 0, opacity: 1 });
+                gsap.set(images.slice(1), { xPercent: 100, yPercent: 100 });
+
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: pinContainerRef.current,
+                        start: 'top top',
+                        end: '+=3000',
+                        scrub: 1,
+                        pin: true,
+                        anticipatePin: 1
+                    }
+                });
+
+                // Desktop Step 1
+                tl.to(texts[0], { autoAlpha: 0, y: -40, duration: 1 })
+                    .to(images[0], { xPercent: 100, yPercent: -100, duration: 1 }, "<")
+                    .to(images[1], { xPercent: 0, yPercent: 0, duration: 1 }, "<")
+                    .to(texts[1], { autoAlpha: 1, y: 0, duration: 1 }, "-=0.5");
+
+                tl.to({}, { duration: 0.5 });
+
+                // Desktop Step 2
+                tl.to(texts[1], { autoAlpha: 0, y: -40, duration: 1 })
+                    .to(images[1], { xPercent: 100, yPercent: -100, duration: 1 }, "<")
+                    .to(images[2], { xPercent: 0, yPercent: 0, duration: 1 }, "<")
+                    .to(texts[2], { autoAlpha: 1, y: 0, duration: 1 }, "-=0.5");
+
+                tl.to({}, { duration: 0.5 });
             });
 
-            // Step 1: Transition from Block 0 -> Block 1
-            tl.to(texts[0], { autoAlpha: 0, y: -40, duration: 1 })
-                .to(images[0], { xPercent: 100, yPercent: -100, duration: 1 }, "<")
-                .to(images[1], { xPercent: 0, yPercent: 0, duration: 1 }, "<")
-                .to(texts[1], { autoAlpha: 1, y: 0, duration: 1 }, "-=0.5");
+            // ==========================================
+            // MOBILE / TABLET: Horizontal Entrance
+            // ==========================================
+            mm.add("(max-width: 1024px)", () => {
+                // Setup images for mobile
+                gsap.set(images[0], { xPercent: 0, yPercent: 0, opacity: 1 });
+                gsap.set(images.slice(1), { xPercent: 120, yPercent: 0 }); // Offscreen to the right
 
-            // Pause slightly
-            tl.to({}, { duration: 0.5 });
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: pinContainerRef.current,
+                        start: 'top 10%', // Keep it slightly below the top of viewport so heading isn't cut off by navbar
+                        end: '+=2000', // Slightly shorter duration for mobile for better scroll feel
+                        scrub: 1,
+                        pin: true,
+                        anticipatePin: 1
+                    }
+                });
 
-            // Step 2: Transition from Block 1 -> Block 2
-            tl.to(texts[1], { autoAlpha: 0, y: -40, duration: 1 })
-                .to(images[1], { xPercent: 100, yPercent: -100, duration: 1 }, "<")
-                .to(images[2], { xPercent: 0, yPercent: 0, duration: 1 }, "<")
-                .to(texts[2], { autoAlpha: 1, y: 0, duration: 1 }, "-=0.5");
+                // Mobile Step 1 - Old image left, new image right
+                tl.to(texts[0], { autoAlpha: 0, y: -40, duration: 1 })
+                    .to(images[0], { xPercent: -120, duration: 1 }, "<")
+                    .to(images[1], { xPercent: 0, duration: 1 }, "<")
+                    .to(texts[1], { autoAlpha: 1, y: 0, duration: 1 }, "-=0.5");
 
-            // Pause slightly
-            tl.to({}, { duration: 0.5 });
+                tl.to({}, { duration: 0.5 });
 
-            // Subtle parallax Background Word
+                // Mobile Step 2
+                tl.to(texts[1], { autoAlpha: 0, y: -40, duration: 1 })
+                    .to(images[1], { xPercent: -120, duration: 1 }, "<")
+                    .to(images[2], { xPercent: 0, duration: 1 }, "<")
+                    .to(texts[2], { autoAlpha: 1, y: 0, duration: 1 }, "-=0.5");
+
+                tl.to({}, { duration: 0.5 });
+            });
+
+            // Background Parallax runs unconditionally
             gsap.to('.wwa-bg-word', {
                 yPercent: -20,
                 ease: 'none',

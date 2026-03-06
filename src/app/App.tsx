@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
-// import { HeroSection, FAQSection } from '../features/hero';
+import { HeroSection } from '../features/hero';
+// import { FAQSection } from '../features/hero';
 import { WhoWeAreSection } from '../features/whoWeAre';
 // import { ProductsSection } from '../features/products';
 // import { DeliveryStatsSection } from '../features/deliveryStats';
@@ -15,7 +16,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={
                         <>
-                            {/* <HeroSection /> */}
+                            <HeroSection />
                             <WhoWeAreSection />
                             {/* <ProductsSection /> */}
                             {/* <DeliveryStatsSection /> */}
