@@ -10,6 +10,7 @@ import logoBwImg from '../../../Images/product/logo = bw.png';
 import zbgImg from '../../../Images/product/product bg z.png';
 import zemanageImg from '../../../Images/product/zemanage.jpg';
 import zefacilityImg from '../../../Images/product/zefacility.jpg';
+import clrbgImg from '../../../Images/product/clrbg.png';
 import './ProductsSection.css';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -31,17 +32,17 @@ const PRODUCTS = [
         downloadBorder: 'none',
         tabAccent: '#0f172a',
         logo: logoColorImg,
-        // Z bg: white (#FFFFFF)
         zFilter: 'brightness(0) invert(1) opacity(0.15)',
         image: zemanageImg,
+        bgImage: clrbgImg,
     },
     {
         id: 'zefacility',
         label: 'ZeFacility',
         description:
             'Automate schedules, space creation, and documentation to simplify data coordination across project teams.',
-        bg: '#1a4490',
-        cardBg: '#1a4490',
+        bg: '#074C91',
+        cardBg: '#074C91',
         textColor: '#ffffff',
         subTextColor: 'rgba(255,255,255,0.75)',
         badgeBg: '#ffffff',      // white pill on blue card
@@ -51,16 +52,16 @@ const PRODUCTS = [
         downloadBorder: 'none',
         tabAccent: '#1a4490',
         logo: logoBwImg,
-        zFilter: 'brightness(0) invert(1) opacity(0.12)',  // white Z on blue card
         image: zefacilityImg,
+        bgImage: zbgImg,
     },
     {
         id: 'zeconnect',
         label: 'ZeConnect',
         description:
             'Streamline model export and link management with intelligent cloud-enabled integrations.',
-        bg: '#f04141',
-        cardBg: '#f04141',
+        bg: '#FC424F',
+        cardBg: '#FC424F',
         textColor: '#ffffff',
         subTextColor: 'rgba(255,255,255,0.80)',
         badgeBg: '#ffffff',      // white pill on red card
@@ -70,9 +71,8 @@ const PRODUCTS = [
         downloadBorder: 'none',
         tabAccent: '#f04141',
         logo: logoBwImg,
-        // Z bg: #FC424F (red-pink)
-        zFilter: 'brightness(0) saturate(100%) invert(48%) sepia(61%) saturate(2855%) hue-rotate(325deg) brightness(101%) contrast(101%) opacity(0.8)',
         image: zemanageImg,
+        bgImage: zbgImg,
     },
 ];
 
@@ -155,7 +155,7 @@ export function ProductsSection() {
         gsap.set(cards, { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' });
         gsap.set(cards[0], { y: 0, opacity: 1, scale: 1, zIndex: 10 });
         cards.slice(1).forEach((card, i) => {
-            gsap.set(card, { y: '100%', opacity: 1, scale: 1, zIndex: 10 + i + 1 });
+            gsap.set(card, { y: '150vh', opacity: 1, scale: 1, zIndex: 10 + i + 1 });
         });
 
         // Single timeline covering the entire sticky scroll range
@@ -259,16 +259,15 @@ export function ProductsSection() {
                             ref={(el) => { if (el) cardRefs.current[i] = el; }}
                             className="ps-card"
                             key={p.id}
-                            style={{ backgroundColor: p.cardBg }}
+                            style={(() => {
+                                const bg = 'bgImage' in p ? (p as any).bgImage : null;
+                                return {
+                                    background: bg
+                                        ? `url('${bg}') 70% center / 35% no-repeat, ${p.cardBg}`
+                                        : p.cardBg
+                                };
+                            })()}
                         >
-                            {/* Z Background Image — tinted per card via filter */}
-                            <img
-                                src={zbgImg}
-                                alt=""
-                                className="ps-card-bg"
-                                style={{ filter: p.zFilter }}
-                            />
-
                             {/* Top row: badge + logo */}
                             <div className="ps-card-top">
                                 <span

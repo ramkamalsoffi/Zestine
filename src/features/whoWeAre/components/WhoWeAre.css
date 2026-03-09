@@ -5,8 +5,8 @@
 .wwa-section {
     position: relative;
     width: 100%;
-    /* Using the approximated color from screenshots */
-    background-color: #123e70;
+    /* Gradient from top right (pink) to bottom left (blue) */
+    background: linear-gradient(to bottom left, #843F5D, #073567);
     color: #fff;
 }
 
