@@ -121,6 +121,7 @@
     z-index: -1;
     transform: scale(0);
     transition: transform 1.2s ease-in-out;
+    
 }
 
 .btnPrimary:hover {
