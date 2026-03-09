@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import { useGsapAnimation } from '../../../hooks/useGsapAnimation';
 import { heroRevealAnimation } from '../hooks/useHeroAnimation';
 import { FaWhatsapp } from 'react-icons/fa';
@@ -9,6 +9,14 @@ const Antigravity = lazy(() => import('../../../components/3d/Antigravity'));
 
 export function HeroSection() {
     const { elementRef: containerRef } = useGsapAnimation<HTMLDivElement>({ animation: heroRevealAnimation });
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     return (
         <>
@@ -18,16 +26,16 @@ export function HeroSection() {
                 <div className="heroAnimBg">
                     <Suspense fallback={<div className="heroAnimFallback" />}>
                         <Antigravity
-                            count={300}
-                            magnetRadius={6}
-                            ringRadius={7}
+                            count={isMobile ? 150 : 500}
+                            magnetRadius={10}
+                            ringRadius={10}
                             waveSpeed={0.4}
-                            waveAmplitude={1}
-                            particleSize={1.5}
-                            lerpSpeed={0.09}
-                            color="#ef4444"
-                            color2="#0ea5e9"
-                            autoAnimate
+                            waveAmplitude={3.4}
+                            particleSize={0.5}
+                            lerpSpeed={0.1}
+                            color="#FC424F"
+                            color2="#033465"
+                            autoAnimate={false}
                             particleVariance={1}
                             rotationSpeed={0}
                             depthFactor={1}

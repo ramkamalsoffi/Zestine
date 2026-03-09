@@ -39,10 +39,7 @@
 .heroOverlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right,
-            rgba(255, 255, 255, 0.88) 0%,
-            rgba(255, 255, 255, 0.70) 50%,
-            rgba(255, 255, 255, 0.20) 100%);
+    background: transparent;
     z-index: 1;
     pointer-events: none;
 }
@@ -95,7 +92,9 @@
 }
 
 .btnPrimary {
-    background-color: #0ea5e9;
+    position: relative;
+    background-color: #FFBA00;
+    /* Zestine Orange */
     color: white;
     padding: 0.875rem 2rem;
     border-radius: 8px;
@@ -103,13 +102,34 @@
     font-weight: 600;
     font-size: 1rem;
     cursor: pointer;
-    transition: opacity 0.2s, transform 0.2s;
-    box-shadow: 0 4px 20px rgba(14, 165, 233, 0.35);
+    overflow: hidden;
+    z-index: 1;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 20px rgba(255, 186, 0, 0.35);
+}
+
+.btnPrimary::before {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -50px;
+    width: 100px;
+    height: 100px;
+    background-color: #7EBA00;
+    /* Zestine Green */
+    border-radius: 50%;
+    z-index: -1;
+    transform: scale(0);
+    transition: transform 1.2s ease-in-out;
 }
 
 .btnPrimary:hover {
-    opacity: 0.9;
+    box-shadow: 0 6px 20px rgba(126, 186, 0, 0.4);
     transform: translateY(-2px);
+}
+
+.btnPrimary:hover::before {
+    transform: scale(10);
 }
 
 .btnSecondary {

@@ -1,8 +1,9 @@
-import { useRef } from 'react';
-import { FaDownload } from 'react-icons/fa';
+import { useRef, useState } from 'react';
+import { FaDownload, FaTimes, FaCheckCircle } from 'react-icons/fa';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 import logoColorImg from '../../../Images/product/logo-color.png';
 import logoBwImg from '../../../Images/product/logo = bw.png';
@@ -11,7 +12,7 @@ import zemanageImg from '../../../Images/product/zemanage.jpg';
 import zefacilityImg from '../../../Images/product/zefacility.jpg';
 import './ProductsSection.css';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const PRODUCTS = [
     {
@@ -86,6 +87,25 @@ export function ProductsSection() {
     const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
     const activeIndexRef = useRef(0);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+        setIsSubmitted(false);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        // Add a slight delay before resetting form state to allow close animation (if any)
+        setTimeout(() => setIsSubmitted(false), 300);
+    };
+
+    const handleFormSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitted(true);
+    };
+
     const setActiveTab = (index: number) => {
         activeIndexRef.current = index;
         tabRefs.current.forEach((tab, i) => {
@@ -95,6 +115,34 @@ export function ProductsSection() {
             tab.style.color = isActive ? PRODUCTS[i].tabAccent : '#6b7280';
             tab.style.fontWeight = isActive ? '600' : '400';
         });
+    };
+
+    const handleTabClick = (index: number) => {
+        if (!wrapperRef.current) return;
+
+        // Calculate the progress needed for this card
+        const numChapters = 2 * (PRODUCTS.length - 1) + 1;
+        // The center of the hold chapter for card index `i` is at chapter `2*i`.
+        // We add 0.5 to land perfectly in the middle of it.
+        const chapterCenter = 2 * index + 0.5;
+        let progress = chapterCenter / numChapters;
+
+        // Minor tweak since index 0 might just be top, index 2 might be bottom
+        if (index === 0) progress = 0.05;
+        if (index === PRODUCTS.length - 1) progress = 0.95;
+
+        // Try to get precise scroll via ScrollTrigger, otherwise fallback
+        const trigger = ScrollTrigger.getAll().find(t => t.trigger === wrapperRef.current);
+
+        if (trigger) {
+            const scrollY = trigger.start + (trigger.end - trigger.start) * progress;
+            gsap.to(window, { duration: 1, scrollTo: scrollY, ease: 'power2.out' });
+        } else {
+            const startY = wrapperRef.current.offsetTop;
+            const scrollDistance = wrapperRef.current.offsetHeight - window.innerHeight;
+            const scrollY = startY + (scrollDistance * progress);
+            gsap.to(window, { duration: 1, scrollTo: scrollY, ease: 'power2.out' });
+        }
     };
 
     useGSAP(() => {
@@ -196,6 +244,7 @@ export function ProductsSection() {
                             key={prod.id}
                             ref={(el) => { if (el) tabRefs.current[i] = el; }}
                             className="ps-tab"
+                            onClick={() => handleTabClick(i)}
                             style={{
                                 color: i === 0 ? prod.tabAccent : '#6b7280',
                                 borderColor: i === 0 ? prod.tabAccent : 'transparent',
@@ -245,10 +294,9 @@ export function ProductsSection() {
                                         {p.description}
                                     </p>
                                     <button
-                                        className="ps-download-btn"
+                                        className="ps-download-btn btn-zestine"
+                                        onClick={openModal}
                                         style={{
-                                            backgroundColor: p.downloadBg,
-                                            color: p.downloadText,
                                             border: p.downloadBorder,
                                         }}
                                     >
@@ -265,6 +313,51 @@ export function ProductsSection() {
                     ))}
                 </div>
             </div>
+
+            {/* Download Form Modal Overlay */}
+            {isModalOpen && (
+                <div className="ps-modal-overlay">
+                    <div className="ps-modal-content">
+                        <button className="ps-modal-close" onClick={closeModal}>
+                            <FaTimes />
+                        </button>
+
+                        {!isSubmitted ? (
+                            <>
+                                <h3 className="ps-modal-title">Download Request</h3>
+                                <p className="ps-modal-desc">Please fill out the form below to initiate your download.</p>
+
+                                <form className="ps-modal-form" onSubmit={handleFormSubmit}>
+                                    <div className="ps-form-group">
+                                        <input type="text" placeholder="Name" required className="ps-form-input" />
+                                    </div>
+                                    <div className="ps-form-group">
+                                        <input type="email" placeholder="Email" required className="ps-form-input" />
+                                    </div>
+                                    <div className="ps-form-group">
+                                        <input type="text" placeholder="Company" required className="ps-form-input" />
+                                    </div>
+                                    <div className="ps-form-group">
+                                        <input type="text" placeholder="Location" required className="ps-form-input" />
+                                    </div>
+                                    <button type="submit" className="ps-form-submit btn-zestine">
+                                        Submit
+                                    </button>
+                                </form>
+                            </>
+                        ) : (
+                            <div className="ps-modal-success">
+                                <FaCheckCircle className="ps-success-icon" />
+                                <h3 className="ps-modal-title">Download Ready!</h3>
+                                <p className="ps-modal-desc">Your download will begin shortly. Thank you for choosing Zestine.</p>
+                                <button className="ps-form-submit btn-zestine" onClick={closeModal} style={{ marginTop: '2rem' }}>
+                                    Okay
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

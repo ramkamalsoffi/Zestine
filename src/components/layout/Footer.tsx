@@ -75,6 +75,7 @@ export function Footer() {
                     {/* Column 4: Locations */}
                     <div className="footer-col location-col">
                         <h3 className="footer-heading">Our Locations</h3>
+                        <div className="footer-heading-underline" />
                         <ul className="footer-list">
                             <li><FaMapMarkerAlt className="footer-icon" /> India</li>
                             <li><FaMapMarkerAlt className="footer-icon" /> Dubai, UAE</li>
@@ -85,6 +86,7 @@ export function Footer() {
                     {/* Column 5: Contact */}
                     <div className="footer-col contact-col">
                         <h3 className="footer-heading">Contact Us</h3>
+                        <div className="footer-heading-underline" />
                         <ul className="footer-list">
                             <li><FaPhoneAlt className="footer-icon" /> +91 987654321</li>
                             <li><FaEnvelope className="footer-icon" /> info@company.com</li>

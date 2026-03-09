@@ -84,6 +84,7 @@ export function WhoWeAreSection() {
                                     <li><span className="letter-wrapper"><span className="red-circle small"></span>W</span>orkflow friction</li>
                                     <li><span className="letter-wrapper"><span className="red-circle small"></span>I</span>mplementation gaps</li>
                                     <li><span className="letter-wrapper"><span className="red-circle small"></span>M</span>anual documentation</li>
+                                    <li><span className="letter-wrapper"><span className="red-circle small"></span>R</span>epetitive operational tasks</li>
                                 </ul>
                             </div>
 
@@ -95,9 +96,9 @@ export function WhoWeAreSection() {
                                 <div className="wwa-paragraphs spacing-sm">
                                     <p>Software was being built for engineering - without engineering.</p>
                                     <p>So we reversed the model.</p>
-                                    <p>Domain experts led the design.<br />Technology became the accelerator.</p>
-                                    <p>What began as internal tools to reduce coordination effort quickly became adopted by BIM professionals across projects -<br />shaping the foundation for scalable digital systems built around engineering reality.</p>
-                                    <p>Today, Zestine builds intelligent platforms that help AEC teams operate with clarity, precision, and control -<br />from model governance to data coordination.</p>
+                                    <p>Domain experts led the design.</p>
+                                    <p>Technology became the accelerator. What began as internal tools to reduce coordination effort quickly became adopted by BIM professionals across projects - shaping the foundation for scalable digital systems built around engineering reality.</p>
+                                    <p>Today, Zestine builds intelligent platforms that help AEC teams operate with clarity, precision, and control - from model governance to data coordination.</p>
                                 </div>
                             </div>
                         </div>

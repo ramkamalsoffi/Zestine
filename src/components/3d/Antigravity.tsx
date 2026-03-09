@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useEffect } from 'react';
 import * as THREE from 'three';
 
 // ─────────────────────────────────────────────
@@ -102,7 +102,9 @@ function tickParticles(
             Math.pow(particle.cx - projectedX, 2) + Math.pow(particle.cy - projectedY, 2)
         );
         const distFromRing = Math.abs(distToMouse - ringRadius);
-        const scaleFactor = Math.max(0, Math.min(1, 1 - distFromRing / 10));
+        // Maintain a minimum scale of 0.35 so particles are visible everywhere (not dull)
+        // and increase the falloff distance so the transition is smoother
+        const scaleFactor = Math.max(0.35, Math.min(1, 1 - distFromRing / 30));
         const finalScale = scaleFactor * (0.8 + Math.sin(t * pulseSpeed) * 0.2 * particleVariance) * particleSize;
 
         dummy.scale.set(finalScale, finalScale, finalScale);
@@ -142,6 +144,17 @@ function AntigravityInner({
     const lastMousePos = useRef({ x: 0, y: 0 });
     const lastMouseMoveTime = useRef(0);
     const virtualMouse = useRef({ x: 0, y: 0 });
+    const globalPointer = useRef({ x: 0, y: 0 });
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            // Normalize to -1 to +1 standard WebGL coordinates
+            globalPointer.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+            globalPointer.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
 
     // Split particles into two halves if dual-color, else all in one group
     const { particlesA, particlesB } = useMemo(() => {
@@ -175,7 +188,8 @@ function AntigravityInner({
     const tickOpts = { magnetRadius, ringRadius, waveSpeed, waveAmplitude, lerpSpeed, depthFactor, fieldStrength, pulseSpeed, particleVariance, particleSize };
 
     useFrame((state) => {
-        const { viewport: v, pointer: m } = state;
+        const { viewport: v } = state;
+        const m = globalPointer.current;
 
         const mouseDist = Math.sqrt(
             Math.pow(m.x - lastMousePos.current.x, 2) +
@@ -195,7 +209,8 @@ function AntigravityInner({
             destY = Math.cos(time * 0.5 * 2) * (v.height / 4);
         }
 
-        const smoothFactor = 0.12;
+        // Increased from 0.12 to 0.85 to almost eliminate the lag while keeping it slightly smooth
+        const smoothFactor = 0.85;
         virtualMouse.current.x += (destX - virtualMouse.current.x) * smoothFactor;
         virtualMouse.current.y += (destY - virtualMouse.current.y) * smoothFactor;
 

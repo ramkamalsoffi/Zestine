@@ -66,12 +66,12 @@ export function useWhoWeAreAnimation(refs: AnimationRefs) {
             });
 
             // ==========================================
-            // MOBILE / TABLET: Horizontal Entrance
+            // MOBILE / TABLET: Simple Fade Entrance
             // ==========================================
             mm.add("(max-width: 1024px)", () => {
-                // Setup images for mobile
-                gsap.set(images[0], { xPercent: 0, yPercent: 0, opacity: 1 });
-                gsap.set(images.slice(1), { xPercent: 120, yPercent: 0 }); // Offscreen to the right
+                // Setup images for mobile - all start at center, only opacity changes
+                gsap.set(images[0], { xPercent: 0, yPercent: 0, opacity: 1, autoAlpha: 1 });
+                gsap.set(images.slice(1), { xPercent: 0, yPercent: 0, opacity: 0, autoAlpha: 0 });
 
                 const tl = gsap.timeline({
                     scrollTrigger: {
@@ -85,21 +85,24 @@ export function useWhoWeAreAnimation(refs: AnimationRefs) {
                     }
                 });
 
-                // Mobile Step 1 - Old image left, new image right
+                // Initial hold so the user can read the first block before it fades
+                tl.to({}, { duration: 1.5 });
+
+                // Mobile Step 1 - Simple crossfade
                 tl.to(texts[0], { autoAlpha: 0, y: -40, duration: 1 })
-                    .to(images[0], { xPercent: -120, duration: 1 }, "<")
-                    .to(images[1], { xPercent: 0, duration: 1 }, "<")
+                    .to(images[0], { autoAlpha: 0, duration: 1 }, "<")
+                    .to(images[1], { autoAlpha: 1, duration: 1 }, "<")
                     .to(texts[1], { autoAlpha: 1, y: 0, duration: 1 }, "-=0.5");
 
-                tl.to({}, { duration: 0.5 });
+                tl.to({}, { duration: 0.5 }); // Hold
 
-                // Mobile Step 2
+                // Mobile Step 2 - Simple crossfade
                 tl.to(texts[1], { autoAlpha: 0, y: -40, duration: 1 })
-                    .to(images[1], { xPercent: -120, duration: 1 }, "<")
-                    .to(images[2], { xPercent: 0, duration: 1 }, "<")
+                    .to(images[1], { autoAlpha: 0, duration: 1 }, "<")
+                    .to(images[2], { autoAlpha: 1, duration: 1 }, "<")
                     .to(texts[2], { autoAlpha: 1, y: 0, duration: 1 }, "-=0.5");
 
-                tl.to({}, { duration: 0.5 });
+                tl.to({}, { duration: 0.5 }); // Hold
             });
 
             // Background Parallax runs unconditionally

@@ -58,9 +58,12 @@
     font-size: 0.95rem;
     font-weight: 400;
     color: #6b7280;
-    cursor: default;
-    /* not clickable — GSAP drives it */
-    transition: border-color 0.3s ease, color 0.3s ease, font-weight 0.15s ease;
+    cursor: pointer;
+    transition: border-color 0.3s ease, color 0.3s ease, font-weight 0.15s ease, background-color 0.2s ease;
+}
+
+.ps-tab:hover {
+    background-color: rgba(0, 0, 0, 0.03);
 }
 
 .ps-tab--active {
@@ -289,5 +292,147 @@
     .ps-download-btn {
         padding: 0.6rem 1.25rem;
         font-size: 0.9rem;
+    }
+}
+
+/* ── Download Modal ── */
+.ps-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.85);
+    /* Dark blur overlay */
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.ps-modal-content {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 3rem;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: psModalFadeIn 0.3s ease-out;
+}
+
+@keyframes psModalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.ps-modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.ps-modal-close:hover {
+    color: #334155;
+}
+
+.ps-modal-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.ps-modal-desc {
+    font-size: 0.95rem;
+    color: #64748b;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.ps-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.ps-form-input {
+    width: 100%;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.875rem 1.25rem;
+    color: #0f172a;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.ps-form-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.ps-form-input::placeholder {
+    color: #94a3b8;
+}
+
+.ps-form-submit {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    cursor: pointer;
+}
+
+/* Success Screen */
+.ps-modal-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.ps-success-icon {
+    font-size: 4.5rem;
+    color: #8dc63f;
+    /* Zestine Green */
+    margin-bottom: 1.5rem;
+    animation: psSuccessPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes psSuccessPop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
     }
 }

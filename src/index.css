@@ -43,3 +43,42 @@ body {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* ============================================
+   GLOBAL ZESTINE BUTTON EFFECTS
+   ============================================ */
+.btn-zestine {
+  position: relative;
+  background-color: #FFBA00 !important;
+  /* Zestine Orange */
+  color: #ffffff !important;
+  border: none !important;
+  overflow: hidden;
+  z-index: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(255, 186, 0, 0.4) !important;
+}
+
+.btn-zestine::before {
+  content: '';
+  position: absolute;
+  bottom: -50px;
+  left: -50px;
+  width: 100px;
+  height: 100px;
+  background-color: #7EBA00 !important;
+  /* Zestine Green */
+  border-radius: 50%;
+  z-index: -1;
+  transform: scale(0);
+  transition: transform 0.85s ease-out;
+}
+
+.btn-zestine:hover {
+  box-shadow: 0 6px 20px rgba(126, 186, 0, 0.5) !important;
+  transform: translateY(-2px) !important;
+}
+
+.btn-zestine:hover::before {
+  transform: scale(10);
+}

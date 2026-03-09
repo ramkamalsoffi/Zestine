@@ -38,18 +38,13 @@
 
 .faq-item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.75rem;
-    /* Smoother, squatter text box */
+    flex-direction: column;
+    padding: 1.25rem 1.75rem;
     background-color: #ffffff;
     border-radius: 30px;
-    /* Extremely pill-shaped curve */
     border: none;
     border-left: 5px solid #004e98;
-    /* Left border traces the curve flawlessly */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    /* Soft drop shadow */
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -57,14 +52,21 @@
 }
 
 .faq-item:hover {
-    transform: translateY(-2px);
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+
+.faq-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .faq-question {
     font-size: 1.05rem;
     font-weight: 500;
     color: #475569;
+    padding-right: 1rem;
 }
 
 .faq-icon {
@@ -73,6 +75,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-icon.rotate {
+    transform: rotate(45deg);
+    color: #004e98;
+}
+
+.faq-answer-wrapper {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-answer-inner {
+    padding-top: 1rem;
+}
+
+.faq-answer-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #64748b;
+    margin: 0;
 }
 
 /* RIGHT SIDE - Contact Form */

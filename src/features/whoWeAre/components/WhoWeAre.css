@@ -58,10 +58,23 @@
 }
 
 .wwa-main-title {
+    width: 100%;
+    max-width: 426px;
+    /* From Figma: width 426 */
+    height: 95px;
+    /* From Figma: height 95 */
+    margin: 0 auto;
+    /* Centering corresponds to left 747 on 1920 width */
+    opacity: 1;
+    /* From Figma: opacity 1 */
     font-size: clamp(2.5rem, 4vw, 3.2rem);
     font-weight: 600;
     color: #ffffff;
-    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(0deg);
+    /* From Figma: angle 0 deg */
 }
 
 /* ============================================
@@ -206,21 +219,27 @@
 @media (max-width: 1024px) {
     .wwa-content-grid {
         grid-template-columns: 1fr;
-        gap: 2rem;
-        /* Reduced gap to save height */
+        gap: 1rem;
+        /* Give breathing room between image and text */
         text-align: center;
     }
 
     .wwa-image-col {
         display: flex;
         justify-content: center;
+        align-items: center;
         height: auto;
+        padding-top: 1rem;
     }
 
     .wwa-image-frame {
-        max-width: 100%;
+        width: 80%;
+        /* Centered narrower width on tablet and mobile */
         height: 280px;
-        /* Reduced image height to make space */
+        /* Reduced height to allow more space for text */
+        margin: 0 auto;
+        border-radius: 20px;
+        /* Rounded corners for tablet/mobile */
         position: relative;
     }
 
@@ -230,8 +249,10 @@
     }
 
     .wwa-text-col {
-        height: 380px;
-        /* Match text height requirement without overflow */
+        height: 480px;
+        /* Fixed height for absolute children */
+        padding: 0 2rem;
+        /* Gap on both sides */
     }
 
     .wwa-stacked-text {
@@ -241,12 +262,23 @@
     .wwa-list {
         align-items: center;
     }
+
+    /* Shrink the text sizes to prevent hiding/cutoff */
+    .wwa-heading {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .wwa-paragraphs p,
+    .wwa-list li {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
 }
 
 @media (max-width: 768px) {
     .wwa-pin-container {
-        padding: 6rem 0 2rem;
-        /* Shift content slightly downwards */
+        padding: 5rem 0 2rem;
     }
 
     .wwa-container {
@@ -255,25 +287,42 @@
 
     .wwa-header {
         padding: 0 1.5rem;
-        margin-bottom: 1.5rem;
-        /* Tighter header */
+        margin-bottom: 2rem;
     }
 
     .wwa-main-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        height: auto;
     }
 
     .wwa-text-col {
-        padding: 0 1.5rem;
-        height: 340px;
-        /* Squish text slightly more for small mobile */
+        padding: 0 2.5rem;
+        /* Increased padding for clear left/right gap */
+        height: 380px;
+        /* Give it safe height to stretch within */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        /* Flow from top rather than forced center */
+    }
+
+    /* Make text even smaller for phones */
+    .wwa-heading {
+        font-size: 1.35rem;
+        margin-bottom: 1rem;
+    }
+
+    .wwa-paragraphs p,
+    .wwa-list li {
+        font-size: 0.8rem;
+        line-height: 1.35;
     }
 
     .wwa-image-frame {
-        height: 240px;
-        /* Ensure image fits completely without being squished out of bounds */
-        border-radius: 0;
-        /* Can be square if touching edges or keep rounded if there is padding */
+        height: 220px;
+        /* Even smaller image on narrow phones */
+        width: 85%;
+        margin: 0 auto;
     }
 
     .wwa-bg-word {
