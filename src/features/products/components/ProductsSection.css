@@ -56,6 +56,12 @@
     width: 100px;
     height: 100px;
     object-fit: contain;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.ps-tab-logo-inactive {
+    filter: grayscale(100%);
+    opacity: 0.5;
 }
 
 .ps-tab {

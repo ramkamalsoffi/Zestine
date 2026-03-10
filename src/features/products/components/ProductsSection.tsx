@@ -253,7 +253,7 @@ export function ProductsSection() {
                             style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}
                             onClick={() => handleTabClick(i)}
                         >
-                            <img src={prod.tabLogo} alt="" className="ps-tab-logo" />
+                            <img src={prod.tabLogo} alt="" className={`ps-tab-logo ${i !== activeTab ? 'ps-tab-logo-inactive' : ''}`} />
                             <button
                                 ref={(el) => { if (el) tabRefs.current[i] = el; }}
                                 className="ps-tab"
