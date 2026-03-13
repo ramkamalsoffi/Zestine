@@ -150,9 +150,10 @@
 }
 
 .ps-logo {
-    width: 60px;
+    width: 120px;
     height: auto;
     object-fit: contain;
+    opacity: 0.9;
 }
 
 /* ── Product name ── */

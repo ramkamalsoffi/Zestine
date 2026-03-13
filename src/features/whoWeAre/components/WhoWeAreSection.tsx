@@ -1,7 +1,7 @@
 import { useRef } from 'react';
-import blueprintImg from '../../../Images/who are we/Rectangle 7.png';
-import buildingImg from '../../../Images/who are we/Rectangle 8.png';
-import successImg from '../../../Images/who are we/Rectangle 9.png';
+import lineArt1 from '../../../Images/who are we/Line art/vector line art-01.png';
+import lineArt2 from '../../../Images/who are we/Line art/vector line art-02.png';
+import lineArt3 from '../../../Images/who are we/Line art/vector line art-03.png';
 import { useWhoWeAreAnimation } from '../hooks/useWhoWeAreAnimation';
 import './WhoWeAre.css';
 
@@ -44,20 +44,20 @@ export function WhoWeAreSection() {
                         <div className="wwa-image-col">
                             <div className="wwa-image-frame" ref={assignImageRef(0)}>
                                 <img
-                                    src={blueprintImg}
-                                    alt="Engineering blueprint"
+                                    src={lineArt1}
+                                    alt="Line art vector 1"
                                 />
                             </div>
                             <div className="wwa-image-frame" ref={assignImageRef(1)}>
                                 <img
-                                    src={buildingImg}
-                                    alt="Corporate building"
+                                    src={lineArt2}
+                                    alt="Line art vector 2"
                                 />
                             </div>
                             <div className="wwa-image-frame" ref={assignImageRef(2)}>
                                 <img
-                                    src={successImg}
-                                    alt="Team success"
+                                    src={lineArt3}
+                                    alt="Line art vector 3"
                                 />
                             </div>
                         </div>

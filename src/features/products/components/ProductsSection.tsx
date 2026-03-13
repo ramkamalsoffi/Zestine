@@ -4,15 +4,15 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-
-import logoColorImg from '../../../Images/product/logo-color.png';
-import logoBwImg from '../../../Images/product/logo = bw.png';
 import zeManageIcon from '../../../Images/product/logo/Ze manage.png';
 import zeFacilityIcon from '../../../Images/product/logo/Ze facility.png';
 import zeConnectIcon from '../../../Images/product/logo/Ze connect_png.png';
 import zbgImg from '../../../Images/product/product bg z.png';
 import zemanageImg from '../../../Images/product/zemanage.jpg';
 import zefacilityImg from '../../../Images/product/zefacility.jpg';
+import zeManageOutline from '../../../Images/product/logo/Ze manage.png';
+import zeFacilityOutline from '../../../Images/product/outline logos/Zefacily final_outline & white logo-01.png';
+import zeConnectOutline from '../../../Images/product/outline logos/ze connect_outline & white logo-01.png';
 import clrbgImg from '../../../Images/product/clrbg.png';
 import './ProductsSection.css';
 
@@ -34,7 +34,7 @@ const PRODUCTS = [
         downloadText: '#ffffff',
         downloadBorder: 'none',
         tabAccent: '#0f172a',
-        logo: logoColorImg,
+        logo: zeManageOutline,
         tabLogo: zeManageIcon,
         zFilter: 'brightness(0) invert(1) opacity(0.15)',
         image: zemanageImg,
@@ -55,7 +55,7 @@ const PRODUCTS = [
         downloadText: '#111827',
         downloadBorder: 'none',
         tabAccent: '#1a4490',
-        logo: logoBwImg,
+        logo: zeFacilityOutline,
         tabLogo: zeFacilityIcon,
         image: zefacilityImg,
         bgImage: zbgImg,
@@ -75,7 +75,7 @@ const PRODUCTS = [
         downloadText: '#111827',
         downloadBorder: 'none',
         tabAccent: '#f04141',
-        logo: logoBwImg,
+        logo: zeConnectOutline,
         tabLogo: zeConnectIcon,
         image: zemanageImg,
         bgImage: zbgImg,
