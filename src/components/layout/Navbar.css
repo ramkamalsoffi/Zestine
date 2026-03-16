@@ -73,13 +73,13 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 15px rgba(252, 66, 79, 0.2);
+    box-shadow: none;
 }
 
 .nav-btn:hover {
     background-color: #e53945;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(252, 66, 79, 0.4);
+    box-shadow: none;
 }
 
 /* Hamburger Icon */

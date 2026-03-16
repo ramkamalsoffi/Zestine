@@ -8,15 +8,17 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import zeManageIcon from '../../../Images/product/logo/Ze manage.png';
 import zeFacilityIcon from '../../../Images/product/logo/Ze facility.png';
 import zeConnectIcon from '../../../Images/product/logo/Ze connect_png.png';
-import zeDiagIcon from '../../../Images/product/logo-color.png';
 import zemanageImg from '../../../Images/product/zemanage.jpg';
-import zefacilityImg from '../../../Images/product/zefacility.jpg';
 import zColorLogo from '../../../Images/product/logo-color.png';
 import zBWLogo from '../../../Images/product/logo = bw.png';
 import zeManageOutline from '../../../Images/product/logo/Ze manage.png';
 import zeFacilityOutline from '../../../Images/product/outline logos/Zefacily final_outline & white logo-01.png';
 import zeConnectOutline from '../../../Images/product/outline logos/ze connect_outline & white logo-01.png';
-import zeDiagJpg from '../../../Images/product/outline logos/zediag.jpeg';
+import zeDiagTopLogo from '../../../Images/product/outline logos/Ze Diag Logo.png';
+import zeDiagBgLogo from '../../../Images/product/outline logos/Ze Diag Inverse Logo Png.png';
+import zeConnectGif from '../../../Images/product/GIF Animation Final/GIF_animation-ZE-CONNECT.gif';
+import zeDiagGif from '../../../Images/product/GIF Animation Final/GIF_animation-ZE-DIAG.gif';
+import zeFacilityGif from '../../../Images/product/GIF Animation Final/GIF_animation-ZE-FACILITY.gif';
 import './ProductsSection.css';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -64,7 +66,7 @@ const PRODUCTS = [
         logo: zBWLogo,
         tabLogo: zeFacilityIcon,
         btnText: 'Download',
-        image: zefacilityImg,
+        image: zeFacilityGif,
         bgImage: zeFacilityOutline,
     },
     {
@@ -86,7 +88,7 @@ const PRODUCTS = [
         logo: zBWLogo,
         tabLogo: zeConnectIcon,
         btnText: 'Download',
-        image: zemanageImg,
+        image: zeConnectGif,
         bgImage: zeConnectOutline,
     },
     {
@@ -106,10 +108,10 @@ const PRODUCTS = [
         downloadBorder: 'none',
         tabAccent: '#7eba00',
         logo: zBWLogo,
-        tabLogo: zeDiagIcon,
+        tabLogo: zeDiagTopLogo,
         btnText: 'Know More',
-        image: zemanageImg,
-        bgImage: zeDiagJpg,
+        image: zeDiagGif,
+        bgImage: zeDiagBgLogo,
     },
 ];
 
@@ -128,6 +130,15 @@ export function ProductsSection() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [taglineIndex, setTaglineIndex] = useState(0);
+
+    // Dynamic Tagline Rotation
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTaglineIndex((prev) => (prev + 1) % 3); // All products have 3 taglines
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
 
     // Auto-advance logic
     useEffect(() => {
@@ -330,7 +341,7 @@ export function ProductsSection() {
                                     alt=""
                                     className={`ps-tab-logo ${i !== activeTab ? 'ps-tab-logo-inactive' : ''}`}
                                     style={{
-                                        width: prod.id === 'zediag' ? '45px' : '100px',
+                                        width: prod.id === 'zediag' ? '70px' : '100px',
                                         height: 'auto'
                                     }}
                                 />
@@ -372,7 +383,7 @@ export function ProductsSection() {
                                     className="ps-badge"
                                     style={{ backgroundColor: p.badgeBg, color: p.badgeText }}
                                 >
-                                    Product
+                                    {p.id === 'zemanage' ? 'Coming soon!!' : 'Product'}
                                 </span>
                                 <img
                                     src={p.logo}
@@ -392,13 +403,6 @@ export function ProductsSection() {
                                     <p className="ps-description" style={{ color: p.subTextColor }}>
                                         {p.description}
                                     </p>
-                                    {(p as any).tagline && (
-                                        <div className="ps-tagline" style={{ color: p.subTextColor, opacity: 0.8 }}>
-                                            {(p as any).tagline.split('\n').map((line: string, idx: number) => (
-                                                <div key={idx} className="ps-tagline-item">{line}</div>
-                                            ))}
-                                        </div>
-                                    )}
                                     <button
                                         className="ps-download-btn btn-zestine"
                                         onClick={openModal}
@@ -411,9 +415,27 @@ export function ProductsSection() {
                                     </button>
                                 </div>
 
-                                {/* Tilted image */}
-                                <div className="ps-image-wrap">
-                                    <img src={p.image} alt={p.label} className="ps-product-image" />
+                                {/* Right Side: Tagline Block + Image */}
+                                <div className="ps-card-right">
+                                    {/* Dynamic Tagline Standalone Block */}
+                                    {p.tagline && (
+                                        <div className="ps-dynamic-tagline-block">
+                                            {p.tagline.split('\n').map((line: string, idx: number) => (
+                                                <div 
+                                                    key={idx} 
+                                                    className={`ps-dynamic-tagline-item ${idx === taglineIndex ? 'active' : ''}`}
+                                                    style={{ color: p.textColor }}
+                                                >
+                                                    {line}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    
+                                    {/* Tilted image */}
+                                    <div className="ps-image-wrap">
+                                        <img src={p.image} alt={p.label} className="ps-product-image" />
+                                    </div>
                                 </div>
                             </div>
                         </div>

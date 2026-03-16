@@ -29,6 +29,8 @@ const TESTIMONIALS = [
     }
 ];
 
+import NanoParticles from '../../../components/ui/NanoParticles';
+
 export const TestimonialsSection: React.FC = () => {
     const listRef = useRef<HTMLUListElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -88,49 +90,56 @@ export const TestimonialsSection: React.FC = () => {
 
     return (
         <section id="testimonials" className="ts-section">
-            <h2 className="ts-title">Trusted by BIM professionals</h2>
-            <div className="ts-layout">
-                <div ref={leftColRef} className="ts-left-col" style={{ backgroundImage: `url(${bgImage})` }}>
-                    <div className="ts-left-overlay">
-                        <div className="ts-quote-icon">“</div>
-                        <h3 className="ts-left-text">
-                            Zestine was<br />
-                            built by<br />
-                            professionals<br />
-                            who lived those<br />
-                            workflows first.
-                        </h3>
-                    </div>
-                </div>
-                <div className="ts-right-col">
-                    <div ref={containerRef} className="ts-scroller" style={{ overflowX: 'auto', scrollBehavior: 'smooth', scrollbarWidth: 'none' }}>
-                        <ul ref={listRef} className={`ts-scroller-list${started ? ' animate-scroll' : ''}`}>
-                            {TESTIMONIALS.map((item, i) => (
-                                <li key={i} className="ts-card ts-card-dark">
-                                    <p className="ts-text" style={{ whiteSpace: 'pre-line' }}>{item.text}</p>
-                                    <span className="ts-author-name">{item.name}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+            <div className="ts-anim-bg">
+                <NanoParticles />
+            </div>
+            <div className="ts-overlay"></div>
 
-                    <div className="ts-arrows">
-                        <button
-                            className="ts-arrow-btn"
-                            onClick={() => {
-                                if (containerRef.current) {
-                                    containerRef.current.scrollBy({ left: -350, behavior: 'smooth' });
-                                }
-                            }}
-                        >{'<'}</button>
-                        <button
-                            className="ts-arrow-btn"
-                            onClick={() => {
-                                if (containerRef.current) {
-                                    containerRef.current.scrollBy({ left: 350, behavior: 'smooth' });
-                                }
-                            }}
-                        >{'>'}</button>
+            <div className="ts-content-wrapper">
+                <h2 className="ts-title">Trusted by BIM professionals</h2>
+                <div className="ts-layout">
+                    <div ref={leftColRef} className="ts-left-col" style={{ backgroundImage: `url(${bgImage})` }}>
+                        <div className="ts-left-overlay">
+                            <div className="ts-quote-icon">“</div>
+                            <h3 className="ts-left-text">
+                                Zestine was<br />
+                                built by<br />
+                                professionals<br />
+                                who lived those<br />
+                                workflows first.
+                            </h3>
+                        </div>
+                    </div>
+                    <div className="ts-right-col">
+                        <div ref={containerRef} className="ts-scroller" style={{ overflowX: 'auto', scrollBehavior: 'smooth', scrollbarWidth: 'none' }}>
+                            <ul ref={listRef} className={`ts-scroller-list${started ? ' animate-scroll' : ''}`}>
+                                {TESTIMONIALS.map((item, i) => (
+                                    <li key={i} className="ts-card ts-card-dark">
+                                        <p className="ts-text" style={{ whiteSpace: 'pre-line' }}>{item.text}</p>
+                                        <span className="ts-author-name">{item.name}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <div className="ts-arrows">
+                            <button
+                                className="ts-arrow-btn"
+                                onClick={() => {
+                                    if (containerRef.current) {
+                                        containerRef.current.scrollBy({ left: -350, behavior: 'smooth' });
+                                    }
+                                }}
+                            >{'<'}</button>
+                            <button
+                                className="ts-arrow-btn"
+                                onClick={() => {
+                                    if (containerRef.current) {
+                                        containerRef.current.scrollBy({ left: 350, behavior: 'smooth' });
+                                    }
+                                }}
+                            >{'>'}</button>
+                        </div>
                     </div>
                 </div>
             </div>

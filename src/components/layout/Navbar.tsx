@@ -19,7 +19,7 @@ export default function Navbar() {
     // A simple intersection observer to update active section on scroll
     useEffect(() => {
         const handleScroll = () => {
-            const sections = ['hero', 'who-we-are', 'products', 'testimonials', 'footer'];
+            const sections = ['hero', 'who-we-are', 'products', 'testimonials', 'contact', 'footer'];
             for (const section of sections) {
                 const el = document.getElementById(section);
                 if (el) {
@@ -80,14 +80,14 @@ export default function Navbar() {
                 </li>
                 <li>
                     <button
-                        className={`nav-link ${activeSection === 'footer' ? 'active' : ''}`}
-                        onClick={() => scrollToSection('footer')}
+                        className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`}
+                        onClick={() => scrollToSection('contact')}
                     >
                         Contact us
                     </button>
                 </li>
                 <li>
-                    <button className="nav-btn" onClick={() => scrollToSection('footer')}>
+                    <button className="nav-btn" onClick={() => scrollToSection('contact')}>
                         Book a Meeting
                     </button>
                 </li>

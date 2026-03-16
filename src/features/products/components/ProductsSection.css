@@ -92,8 +92,8 @@
     position: relative;
     width: calc(100% - 10rem);
     max-width: 1350px;
-    height: 600px;
-    /* Fixed robust height tailored directly to the card dimensions */
+    height: 570px;
+    /* Adjusted height for slightly smaller image */
     margin: 0 auto;
     flex-shrink: 0;
 }
@@ -142,7 +142,7 @@
 }
 
 .ps-badge {
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.5px;
     padding: 0.3rem 1rem;
@@ -186,7 +186,7 @@
 }
 
 .ps-description {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     line-height: 1.6;
     margin: 0;
 }
@@ -234,16 +234,14 @@
 /* ── Tilted image ── */
 .ps-image-wrap {
     flex-shrink: 0;
-    width: 320px;
-    /* increased width */
-    height: 270px;
-    /* keep height */
-    transform: translateY(-30px) rotate(5deg);
-    /* move up slightly */
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
-    border: 3px solid rgba(255, 255, 255, 0.5);
+    width: 480px;
+    height: 340px;
+    transform: translateY(-65px) rotate(2deg);
+    border-radius: 0;
+    overflow: visible;
+    box-shadow: none;
+    border: none;
+    background: transparent;
 }
 
 .ps-product-image {
@@ -252,6 +250,56 @@
     object-fit: cover;
     object-position: center;
     display: block;
+}
+
+/* ── Right side container (Tagline + Image) ── */
+.ps-card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+    /* Increased space between tagline and GIF */
+    flex-shrink: 0;
+    margin-top: -3rem;
+    /* Moves the entire right side content further up */
+}
+
+/* ── Dynamic Tagline Standalone Block ── */
+.ps-dynamic-tagline-block {
+    position: relative;
+    width: 460px;
+    /* matched to smaller image width */
+    height: 72px;
+    /* slightly taller */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    border-radius: 12px;
+    border: none;
+    overflow: hidden;
+    margin-top: -3.8rem;
+    /* Shifted even further up */
+    transform: translateY(-10px) rotate(2deg);
+}
+
+.ps-dynamic-tagline-item {
+    position: absolute;
+    width: 90%;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.ps-dynamic-tagline-item.active {
+    opacity: 0.95;
+    transform: translateY(0);
 }
 
 /* ── Responsive ── */
