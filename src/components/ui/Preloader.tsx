@@ -33,7 +33,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
             path.style.fill = 'none';
             path.style.strokeLinecap = 'round';
             path.style.strokeLinejoin = 'round';
-            path.style.strokeWidth = '1.5';
+            path.style.strokeWidth = '2';
         });
 
         // 1. Draw the lines
@@ -50,13 +50,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
             );
         });
 
-        // 2. Fill the shapes with color
-        drawTl.to(paths, {
-            fill: (_i, target) => target.getAttribute('data-original-fill'),
-            stroke: 'transparent',
-            duration: 0.5,
-            ease: 'power2.inOut'
-        });
+        // 2. Keep as outline (removed fill animation as per user request)
+        drawTl.to({}, { duration: 0.5 }); // Simple pause for timing
 
         // 3. Fade out the entire preloader container
         const mainTl = gsap.timeline({
