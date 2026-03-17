@@ -26,7 +26,7 @@ export default function NanoParticles() {
 
   // Initialize particles
   useEffect(() => {
-    const particleCount = 800
+    const particleCount = 300
     const initialParticles: Particle[] = Array.from({ length: particleCount }, (_, i) => {
       const x = Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000)
       const y = Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800)
@@ -36,8 +36,8 @@ export default function NanoParticles() {
         y: y,
         baseX: x,
         baseY: y,
-        vx: (Math.random() - 0.5) * 2.0 + 0.5, // Significantly faster
-        vy: (Math.random() - 0.5) * 2.0 + 0.3,
+        vx: (Math.random() - 0.5) * 0.3, // Much slower random drift
+        vy: (Math.random() - 0.5) * 0.3,
         size: Math.random() * 2.0 + 1.0, // Larger for visibility
         opacity: Math.random() * 0.4 + 0.4, // More opaque base
         offsetX: 0,
@@ -70,7 +70,7 @@ export default function NanoParticles() {
     const resizeCanvas = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
-      const particleCount = 600
+      const particleCount = 450
       particlesRef.current = Array.from({ length: particleCount }, (_, i) => {
         const x = Math.random() * canvas.width
         const y = Math.random() * canvas.height
@@ -80,8 +80,8 @@ export default function NanoParticles() {
           y: y,
           baseX: x,
           baseY: y,
-          vx: (Math.random() - 0.5) * 2.0 + 0.5,
-          vy: (Math.random() - 0.5) * 2.0 + 0.3,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
           size: Math.random() * 2.0 + 1.0,
           opacity: Math.random() * 0.4 + 0.4,
           offsetX: 0,
@@ -108,8 +108,8 @@ export default function NanoParticles() {
         particle.baseY += particle.vy
 
         // ── Smooth Mouse Reaction ──
-        const baseMultiplier = 20 // Reverted to higher value for more response
-        const baseLerpFactor = 0.0015 // Faster follow
+        const baseMultiplier = 10 // Reduced for gentler response
+        const baseLerpFactor = 0.0005 // Slower follow
 
         const targetOffsetX = mouseDx * baseMultiplier * particle.rangeFactor
         const targetOffsetY = mouseDy * baseMultiplier * particle.rangeFactor
@@ -118,9 +118,9 @@ export default function NanoParticles() {
         particle.offsetY += (targetOffsetY - particle.offsetY) * baseLerpFactor * particle.speedFactor
 
         // ── Constant Circular "Swim" ──
-        // Much faster (2.5) and larger (40) motion
-        const swimX = Math.sin(time * 2.5 + particle.id) * 40 * particle.rangeFactor
-        const swimY = Math.cos(time * 2.5 + particle.id) * 40 * particle.rangeFactor
+        // Much slower (0.4) and smaller (15) motion
+        const swimX = Math.sin(time * 0.4 + particle.id) * 15 * particle.rangeFactor
+        const swimY = Math.cos(time * 0.4 + particle.id) * 15 * particle.rangeFactor
 
         const x = particle.baseX + particle.offsetX + swimX
         const y = particle.baseY + particle.offsetY + swimY
