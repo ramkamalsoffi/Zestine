@@ -27,8 +27,8 @@ export const DeliveryStatsSection: React.FC = () => {
 
         // Direction  → right means reverse
         containerRef.current.style.setProperty('--animation-direction', 'reverse');
-        // Speed → slow = 80s
-        containerRef.current.style.setProperty('--animation-duration', '80s');
+        // Speed → now 100s (was 80s)
+        containerRef.current.style.setProperty('--animation-duration', '20s');
 
         setStarted(true);
     }, []);

@@ -119,9 +119,9 @@ export function Footer() {
                         <h3 className="footer-heading">Contact Us</h3>
                         <div className="footer-heading-underline" />
                         <ul className="footer-list">
-                            <li><FaPhoneAlt className="footer-icon" /> +1 717 588 2267</li>
-                            <li><FaPhoneAlt className="footer-icon" /> +1 832 206 5663</li>
-                            <li><FaEnvelope className="footer-icon" /> info@zestinetech.com</li>
+                            <li><FaPhoneAlt className="footer-icon" /> <a href="tel:+17175882267" className="footer-link">+1 717 588 2267</a></li>
+                            <li><FaPhoneAlt className="footer-icon" /> <a href="tel:+18322065663" className="footer-link">+1 832 206 5663</a></li>
+                            <li><FaEnvelope className="footer-icon" /> <a href="mailto:info@zestinetech.com" className="footer-link">info@zestinetech.com</a></li>
                         </ul>
                     </div>
                 </div>
@@ -135,17 +135,17 @@ export function Footer() {
                     <div className="action-col flex-row">
                         <div className="action-item">
                             <span className="action-label">Email</span>
-                            <div className="action-value">
+                            <a href="mailto:info@zestinetech.com" className="action-value footer-link">
                                 <FaEnvelope />
                                 info@zestinetech.com
-                            </div>
+                            </a>
                         </div>
                         <div className="action-item">
                             <span className="action-label">Phone Number</span>
-                            <div className="action-value">
+                            <a href="tel:+17175882267" className="action-value footer-link">
                                 <FaPhoneAlt />
                                 +1 717 588 2267
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -50,9 +50,8 @@ export const TestimonialsSection: React.FC = () => {
             });
         }
 
-        // Direction & Speed
-        containerRef.current.style.setProperty('--animation-direction', 'forwards');
-        containerRef.current.style.setProperty('--animation-duration', '50s');
+        // Speed → now 80s (was 50s)
+        containerRef.current.style.setProperty('--animation-duration', '180s');
 
         setStarted(true);
     }, []);

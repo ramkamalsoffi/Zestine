@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { FaCheckCircle } from 'react-icons/fa';
+import { sendContactEmail } from '../../../services/emailService';
 import './FAQSection.css';
 
 const faqs = [
@@ -22,21 +23,17 @@ export function FAQSection() {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const data = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            phone: formData.get('phone'),
-            company: formData.get('company'),
-            requirements: formData.get('requirements'),
+            name: formData.get('name') as string,
+            email: formData.get('email') as string,
+            phone: formData.get('phone') as string,
+            company: formData.get('company') as string,
+            requirements: formData.get('requirements') as string,
         };
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/contact`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-            });
+            const response = await sendContactEmail(data);
 
-            if (response.ok) {
+            if (response.status === 200) {
                 setIsSubmitted(true);
                 setIsError(false);
                 (e.target as HTMLFormElement).reset();

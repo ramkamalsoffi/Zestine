@@ -3,6 +3,7 @@ import { FaDownload, FaTimes, FaCheckCircle } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { sendDownloadEmail } from '../../../services/emailService';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import zeManageIcon from '../../../Images/product/logo/Ze manage.png';
@@ -191,21 +192,17 @@ export function ProductsSection() {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const data = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            company: formData.get('company'),
-            location: formData.get('location'),
+            name: formData.get('name') as string,
+            email: formData.get('email') as string,
+            company: formData.get('company') as string,
+            location: formData.get('location') as string,
             product: PRODUCTS[activeTab].label,
         };
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/download`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-            });
+            const response = await sendDownloadEmail(data);
 
-            if (response.ok) {
+            if (response.status === 200) {
                 setIsSubmitted(true);
                 setIsError(false);
 
@@ -446,7 +443,11 @@ export function ProductsSection() {
                                         className="ps-download-btn btn-zestine"
                                         onClick={() => {
                                             if (p.id === 'zediag') {
-                                                gsap.to(window, { duration: 1.2, scrollTo: '#contact', ease: 'power2.inOut' });
+                                                // Scroll to the FAQ/Contact section
+                                                const contactSection = document.getElementById('contact');
+                                                if (contactSection) {
+                                                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                                                }
                                             } else {
                                                 openModal();
                                             }
@@ -456,7 +457,7 @@ export function ProductsSection() {
                                         }}
                                     >
                                         {(p as any).btnText || 'Download'}{' '}
-                                        {p.id === 'zediag' || p.id === 'zemanage' ? <FiArrowUpRight /> : <FaDownload />}
+                                        {p.id === 'zediag' ? <FiArrowUpRight /> : <FaDownload />}
                                     </button>
                                 </div>
 
@@ -501,16 +502,12 @@ export function ProductsSection() {
                                 <h3 className="ps-modal-title">
                                     {PRODUCTS[activeTab].id === 'zemanage'
                                         ? `${PRODUCTS[activeTab].label} is Coming Soon!`
-                                        : PRODUCTS[activeTab].id === 'zediag'
-                                            ? `Know More About ${PRODUCTS[activeTab].label}`
-                                            : `Download ${PRODUCTS[activeTab].label}`}
+                                        : `Download ${PRODUCTS[activeTab].label}`}
                                 </h3>
                                 <p className="ps-modal-desc">
                                     {PRODUCTS[activeTab].id === 'zemanage'
-                                        ? 'Please fill out the form to join waitlist.'
-                                        : PRODUCTS[activeTab].id === 'zediag'
-                                            ? 'Leave your details and we will get in touch with more information.'
-                                            : 'Please fill out the form to get the product.'}
+                                        ? 'Please fill out the form to join the waitlist.'
+                                        : 'Please fill out the form to get the product.'}
                                 </p>
 
                                 <form className="ps-modal-form" onSubmit={handleFormSubmit}>
