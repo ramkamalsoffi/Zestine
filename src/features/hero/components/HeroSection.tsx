@@ -1,22 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useGsapAnimation } from '../../../hooks/useGsapAnimation';
 import { heroRevealAnimation } from '../hooks/useHeroAnimation';
-import { FaWhatsapp, FaArrowUp } from 'react-icons/fa';
+import { FaArrowUp } from 'react-icons/fa';
 import NanoParticles from '../../../components/ui/NanoParticles';
 import './HeroSection.css';
 
 export function HeroSection() {
     const { elementRef: containerRef } = useGsapAnimation<HTMLDivElement>({ animation: heroRevealAnimation });
     const [showScrollTop, setShowScrollTop] = useState(false);
-    const [showWhatsApp, setShowWhatsApp] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setShowWhatsApp(window.scrollY > 600);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -87,15 +80,7 @@ export function HeroSection() {
                 </div>
             </section>
 
-            <a
-                href="https://wa.me/+18322065663"
-                className={`whatsappFloat ${showWhatsApp ? 'visible' : ''}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Chat on WhatsApp"
-            >
-                <FaWhatsapp />
-            </a>
+
 
             <button
                 className={`scrollTopFloat ${showScrollTop ? 'visible' : ''}`}
