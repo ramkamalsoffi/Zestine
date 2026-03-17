@@ -57,7 +57,13 @@ export function FAQSection() {
                         <h3 className="form-title">Get Started with Zestine</h3>
                         <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
                             <input type="text" placeholder="Name *" required />
-                            <input type="email" placeholder="Email *" required />
+                            <input 
+                                type="email" 
+                                placeholder="Email *" 
+                                required 
+                                onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity('please enter proper email')}
+                                onInput={(e) => (e.target as HTMLInputElement).setCustomValidity('')}
+                            />
                             <input type="tel" placeholder="Phone Number" />
                             <input type="text" placeholder="Company Name *" required />
                             <textarea placeholder="Tell us about your requirements / problems" rows={4} required></textarea>

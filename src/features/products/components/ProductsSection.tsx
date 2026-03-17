@@ -405,13 +405,19 @@ export function ProductsSection() {
                                     </p>
                                     <button
                                         className="ps-download-btn btn-zestine"
-                                        onClick={openModal}
+                                        onClick={() => {
+                                            if (p.id === 'zemanage' || p.id === 'zediag') {
+                                                gsap.to(window, { duration: 1.2, scrollTo: '#contact', ease: 'power2.inOut' });
+                                            } else {
+                                                openModal();
+                                            }
+                                        }}
                                         style={{
                                             border: p.downloadBorder,
                                         }}
                                     >
                                         {(p as any).btnText || 'Download'}{' '}
-                                        {p.id === 'zediag' ? <FiArrowUpRight /> : <FaDownload />}
+                                        {p.id === 'zediag' || p.id === 'zemanage' ? <FiArrowUpRight /> : <FaDownload />}
                                     </button>
                                 </div>
 
@@ -465,7 +471,7 @@ export function ProductsSection() {
                                         ? 'Please fill out the form to join waitlist.'
                                         : PRODUCTS[activeTab].id === 'zediag'
                                         ? 'Leave your details and we will get in touch with more information.'
-                                        : 'Please fill out the form to receive the download link.'}
+                                        : 'Please fill out the form to get the product.'}
                                 </p>
 
                                 <form className="ps-modal-form" onSubmit={handleFormSubmit}>
@@ -473,7 +479,14 @@ export function ProductsSection() {
                                         <input type="text" placeholder="Name" required className="ps-form-input" />
                                     </div>
                                     <div className="ps-form-group">
-                                        <input type="email" placeholder="Email" required className="ps-form-input" />
+                                        <input 
+                                            type="email" 
+                                            placeholder="Email" 
+                                            required 
+                                            className="ps-form-input"
+                                            onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity('please enter proper email')}
+                                            onInput={(e) => (e.target as HTMLInputElement).setCustomValidity('')}
+                                        />
                                     </div>
                                     <div className="ps-form-group">
                                         <input type="text" placeholder="Company" required className="ps-form-input" />
