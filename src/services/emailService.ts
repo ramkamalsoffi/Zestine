@@ -20,7 +20,7 @@ export interface EmailData {
  */
 export const sendContactEmail = async (data: EmailData) => {
   const templateParams = {
-    title: `New Message from ${data.name}`,
+    title: `Contact Us - ${data.name}`,
     form_type: 'Contact Form Inquiry',
     name: data.name,
     email: data.email,
@@ -34,10 +34,13 @@ export const sendContactEmail = async (data: EmailData) => {
   return emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
 };
 
-export const sendDownloadEmail = async (data: EmailData) => {
+export const sendProductRequestEmail = async (data: EmailData) => {
+  const isWaitlist = data.product === 'ZeManage' || data.product === 'ZeConnect' || data.product === 'ZeFacility';
+  const actionType = isWaitlist ? 'Waitlist Request' : 'Interest Request';
+
   const templateParams = {
-    title: `Download Request: ${data.product}`,
-    form_type: 'Product Download',
+    title: `Products - ${data.product} ${actionType} - ${data.name}`,
+    form_type: actionType,
     name: data.name,
     email: data.email,
     company: data.company,

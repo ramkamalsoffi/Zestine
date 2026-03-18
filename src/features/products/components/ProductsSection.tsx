@@ -3,7 +3,7 @@ import { FaDownload, FaTimes, FaCheckCircle } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { sendDownloadEmail } from '../../../services/emailService';
+import { sendProductRequestEmail } from '../../../services/emailService';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import zeManageIcon from '../../../Images/product/logo/Ze manage.png';
@@ -44,6 +44,7 @@ const PRODUCTS = [
         logo: zColorLogo,
         tabLogo: zeManageIcon,
         btnText: 'Join Waitlist',
+        status: 'Coming soon!!',
         zFilter: 'grayscale(1) opacity(0.7)',
         image: zemanageImg,
         bgImage: zeManageOutline,
@@ -66,7 +67,8 @@ const PRODUCTS = [
         tabAccent: '#1a4490',
         logo: zBWLogo,
         tabLogo: zeFacilityIcon,
-        btnText: 'Download',
+        btnText: 'Join Waitlist',
+        status: 'Coming soon!!',
         image: zeFacilityGif,
         bgImage: zeFacilityOutline,
     },
@@ -88,7 +90,8 @@ const PRODUCTS = [
         tabAccent: '#f04141',
         logo: zBWLogo,
         tabLogo: zeConnectIcon,
-        btnText: 'Download',
+        btnText: 'Join Waitlist',
+        status: 'Coming soon!!',
         image: zeConnectGif,
         bgImage: zeConnectOutline,
     },
@@ -111,6 +114,7 @@ const PRODUCTS = [
         logo: zBWLogo,
         tabLogo: zeDiagTopLogo,
         btnText: 'Know More',
+        status: 'Fast Growing',
         image: zeDiagGif,
         bgImage: zeDiagBgLogo,
     },
@@ -152,6 +156,11 @@ export function ProductsSection() {
         window.addEventListener('touchstart', handleInteraction);
 
         const interval = setInterval(() => {
+            if (isModalOpen) {
+                lastScrollRef.current = Date.now(); // Keep resetting while modal is open
+                return;
+            }
+
             const now = Date.now();
             const idleTime = now - lastScrollRef.current;
 
@@ -173,9 +182,10 @@ export function ProductsSection() {
             window.removeEventListener('touchstart', handleInteraction);
             clearInterval(interval);
         };
-    }, []);
+    }, [isModalOpen]);
 
     const openModal = () => {
+        lastScrollRef.current = Date.now();
         setIsModalOpen(true);
         setIsSubmitted(false);
     };
@@ -200,25 +210,11 @@ export function ProductsSection() {
         };
 
         try {
-            const response = await sendDownloadEmail(data);
+            const response = await sendProductRequestEmail(data);
 
             if (response.status === 200) {
                 setIsSubmitted(true);
                 setIsError(false);
-
-                // Auto-trigger download for specific products
-                const productId = PRODUCTS[activeTab].id;
-                if (productId === 'zeconnect') {
-                    const link = document.createElement('a');
-                    link.href = '/ZeConnect_Setup.exe';
-                    link.download = 'ZeConnect_Setup.exe';
-                    link.click();
-                } else if (productId === 'zefacility') {
-                    const link = document.createElement('a');
-                    link.href = '/ZeFacility_Setup.exe';
-                    link.download = 'ZeFacility_Setup.exe';
-                    link.click();
-                }
             } else {
                 setIsError(true);
             }
@@ -421,10 +417,7 @@ export function ProductsSection() {
                                     className="ps-badge"
                                     style={{ backgroundColor: p.badgeBg, color: p.badgeText }}
                                 >
-                                    {p.id === 'zemanage' ? 'Coming soon!!' : 
-                                     p.id === 'zeconnect' ? 'Most Downloads' :
-                                     p.id === 'zefacility' ? 'Fast Growing' :
-                                     p.id === 'zediag' ? 'Highly Recommended' : 'Product'}
+                                    {(p as any).status || 'Product'}
                                 </span>
                             </div>
 
@@ -443,11 +436,7 @@ export function ProductsSection() {
                                         className="ps-download-btn btn-zestine"
                                         onClick={() => {
                                             if (p.id === 'zediag') {
-                                                // Scroll to the FAQ/Contact section
-                                                const contactSection = document.getElementById('contact');
-                                                if (contactSection) {
-                                                    contactSection.scrollIntoView({ behavior: 'smooth' });
-                                                }
+                                                window.location.href = 'http://www.zestinetech.com/products/zediag';
                                             } else {
                                                 openModal();
                                             }
@@ -456,7 +445,7 @@ export function ProductsSection() {
                                             border: p.downloadBorder,
                                         }}
                                     >
-                                        {(p as any).btnText || 'Download'}{' '}
+                                        {(p as any).btnText || 'Action'}{' '}
                                         {p.id === 'zediag' ? <FiArrowUpRight /> : <FaDownload />}
                                     </button>
                                 </div>
@@ -500,14 +489,14 @@ export function ProductsSection() {
                         {!isSubmitted ? (
                             <>
                                 <h3 className="ps-modal-title">
-                                    {PRODUCTS[activeTab].id === 'zemanage'
+                                    {PRODUCTS[activeTab].btnText === 'Join Waitlist'
                                         ? `${PRODUCTS[activeTab].label} is Coming Soon!`
-                                        : `Download ${PRODUCTS[activeTab].label}`}
+                                        : `Request for ${PRODUCTS[activeTab].label}`}
                                 </h3>
                                 <p className="ps-modal-desc">
-                                    {PRODUCTS[activeTab].id === 'zemanage'
+                                    {PRODUCTS[activeTab].btnText === 'Join Waitlist'
                                         ? 'Please fill out the form to join the waitlist.'
-                                        : 'Please fill out the form to get the product.'}
+                                        : 'Please fill out the form to get in touch.'}
                                 </p>
 
                                 <form className="ps-modal-form" onSubmit={handleFormSubmit}>
@@ -541,12 +530,12 @@ export function ProductsSection() {
                             <div className="ps-modal-success">
                                 <FaCheckCircle className="ps-success-icon" />
                                 <h3 className="ps-modal-title">
-                                    {PRODUCTS[activeTab].id === 'zemanage'
+                                    {PRODUCTS[activeTab].btnText === 'Join Waitlist'
                                         ? 'Waitlist Joined!'
                                         : 'Request Received!'}
                                 </h3>
                                 <p className="ps-modal-desc">
-                                    {PRODUCTS[activeTab].id === 'zemanage'
+                                    {PRODUCTS[activeTab].btnText === 'Join Waitlist'
                                         ? `Thank you for your interest. We will notify you when ${PRODUCTS[activeTab].label} is ready.`
                                         : PRODUCTS[activeTab].id === 'zediag'
                                             ? `Thank you. Our team will contact you soon with more details about ${PRODUCTS[activeTab].label}.`
@@ -559,18 +548,6 @@ export function ProductsSection() {
                                 >
                                     Okay
                                 </button>
-
-                                {(PRODUCTS[activeTab].id === 'zeconnect' || PRODUCTS[activeTab].id === 'zefacility') && (
-                                    <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: '#64748b' }}>
-                                        Didn't start? <a
-                                            href={PRODUCTS[activeTab].id === 'zeconnect' ? '/ZeConnect_Setup.exe' : '/ZeFacility_Setup.exe'}
-                                            download
-                                            style={{ color: '#ef4444', textDecoration: 'underline' }}
-                                        >
-                                            Click here to download manually
-                                        </a>
-                                    </p>
-                                )}
                             </div>
                         )}
                     </div>

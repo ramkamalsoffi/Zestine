@@ -8,7 +8,22 @@ const faqs = [
     { id: 1, question: "What is Zestine Technologies?", answer: "Zestine develops intelligent BIM platforms that transform fragmented data and complex workflows into streamlined project delivery." },
     { id: 2, question: "Who is Zestine built for?", answer: "Zestine serves AEC organizations and BIM professionals who design the built world, helping teams move from fragmented, repetitive processes to intelligent operations that scale across projects." },
     { id: 3, question: "What expertise does Zestine bring to AEC?", answer: "With over 10 years of experience across AEC and BIM workflows, Zestine brings real-world insight to identify bottlenecks early. Its 20+ workflow accelerators are trusted by 2000+ users to improve model accuracy and reduce repetitive tasks." },
-    { id: 4, question: "What is the Zestine product suite?", answer: "Zestine’s product suite includes:\n\nZeManage - improves model performance, streamlines workflows, and proactively mitigates risks.\nZeFacility - automates schedules and space documentation.\nZeConnect - enables seamless model exports and cloud integrations.\nZeDiag - instantly diagnoses crashes and uncovers recurring issues automatically.\nAll products are built to support modern engineering operations." },
+    { 
+        id: 4, 
+        question: "What is the Zestine product suite?", 
+        answer: (
+            <div className="faq-answer-bullets">
+                <p>Zestine’s product suite includes:</p>
+                <ul>
+                    <li><strong>ZeManage</strong> - improves model performance, streamlines workflows, and proactively mitigates risks.</li>
+                    <li><strong>ZeFacility</strong> - automates schedules and space documentation.</li>
+                    <li><strong>ZeConnect</strong> - enables seamless model exports and cloud integrations.</li>
+                    <li><strong>ZeDiag</strong> - instantly diagnoses crashes and uncovers recurring issues automatically.</li>
+                </ul>
+                <p>All products are built to support modern engineering operations.</p>
+            </div>
+        )
+    },
     { id: 5, question: "How does Zestine improve AEC workflows?", answer: "Zestine replaces repetitive tasks with systems that reduce operational friction, eliminate manual documentation, improve model governance, boost data reliability, and support faster project execution." },
     { id: 6, question: "Can Zestine integrate with existing AEC tools?", answer: "Yes. Zestine products are designed to integrate into existing AEC environments and support teams working across multiple systems and data formats." }
 ];
@@ -74,7 +89,11 @@ export function FAQSection() {
                                     </div>
                                     <div className="faq-answer-wrapper" style={{ height: isActive ? 'auto' : 0 }}>
                                         <div className="faq-answer-inner">
-                                            <p className="faq-answer-text">{faq.answer}</p>
+                                            {typeof faq.answer === 'string' ? (
+                                                <p className="faq-answer-text">{faq.answer}</p>
+                                            ) : (
+                                                <div className="faq-answer-custom">{faq.answer}</div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
