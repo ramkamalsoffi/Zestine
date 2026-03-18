@@ -9,7 +9,6 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import zeManageIcon from '../../../Images/product/logo/Ze manage.png';
 import zeFacilityIcon from '../../../Images/product/logo/Ze facility.png';
 import zeConnectIcon from '../../../Images/product/logo/Ze connect_png.png';
-import zemanageImg from '../../../Images/product/zemanage.jpg';
 import zColorLogo from '../../../Images/product/logo-color.png';
 import zBWLogo from '../../../Images/product/logo = bw.png';
 import zeManageOutline from '../../../Images/product/logo/Ze manage.png';
@@ -19,6 +18,7 @@ import zeDiagTopLogo from '../../../Images/product/outline logos/Ze Diag Logo.pn
 import zeDiagBgLogo from '../../../Images/product/outline logos/Ze Diag Inverse Logo Png.png';
 import zeConnectGif from '../../../Images/product/GIF Animation Final/GIF_animation-ZE-CONNECT.gif';
 import zeDiagGif from '../../../Images/product/GIF Animation Final/GIF_animation-ZE-DIAG.gif';
+import zeManageVideo from '../../../Images/product/GIF Animation Final/GIF_animation-ZE-MANAGE.mp4';
 import zeFacilityGif from '../../../Images/product/GIF Animation Final/GIF_animation-ZE-FACILITY.gif';
 import './ProductsSection.css';
 
@@ -46,7 +46,7 @@ const PRODUCTS = [
         btnText: 'Join Waitlist',
         status: 'Coming soon!!',
         zFilter: 'grayscale(1) opacity(0.7)',
-        image: zemanageImg,
+        image: zeManageVideo,
         bgImage: zeManageOutline,
     },
     {
@@ -469,7 +469,18 @@ export function ProductsSection() {
 
                                     {/* Tilted image - straightened and moved up for all products */}
                                     <div className="ps-image-wrap ps-image-straight">
-                                        <img src={p.image} alt={p.label} className="ps-product-image" />
+                                        {p.image.endsWith('.mp4') ? (
+                                            <video
+                                                src={p.image}
+                                                autoPlay
+                                                loop
+                                                muted
+                                                playsInline
+                                                className="ps-product-image"
+                                            />
+                                        ) : (
+                                            <img src={p.image} alt={p.label} className="ps-product-image" />
+                                        )}
                                     </div>
                                 </div>
                             </div>
