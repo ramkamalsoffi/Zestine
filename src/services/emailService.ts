@@ -31,6 +31,7 @@ export const sendContactEmail = async (data: EmailData) => {
     requirements: data.requirements || 'None'
   };
 
+  console.log('EmailJS Config:', { SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY: PUBLIC_KEY ? 'SET' : 'MISSING' });
   return emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
 };
 
