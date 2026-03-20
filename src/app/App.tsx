@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { useAnalytics } from '@/hooks/useAnalytics';
+import { getConsent } from '@/services/consentService';
 import Navbar from '../components/layout/Navbar';
 import Preloader from '../components/ui/Preloader';
+import CookieConsent from '../components/ui/CookieConsent';
 import { HeroSection, FAQSection } from '../features/hero';
 import { WhoWeAreSection } from '../features/whoWeAre';
 import { ProductsSection } from '../features/products';
@@ -12,9 +15,12 @@ import group17Img from '../Images/Group 17.svg';
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
+    const [consentGiven, setConsentGiven] = useState(getConsent() === 'accepted');
+
+    useAnalytics(consentGiven);
 
     return (
-        <BrowserRouter>
+        <>
             {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
             <Navbar />
             <main>
@@ -35,7 +41,8 @@ function App() {
                 </Routes>
             </main>
             <Footer />
-        </BrowserRouter> 
+            <CookieConsent onAccept={() => setConsentGiven(true)} />
+        </>
     );
 }
 
