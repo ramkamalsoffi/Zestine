@@ -107,7 +107,7 @@ export function Footer() {
                         <h3 className="footer-heading">Contact Us</h3>
                         <div className="footer-heading-underline" />
                         <ul className="footer-list">
-                            <li><FaPhoneAlt className="footer-icon" /> <a href="tel:+17175882267" className="footer-link">+1 717 588 2267</a></li>
+                            <li><FaPhoneAlt className="footer-icon" /> <a href="tel:+18322069137" className="footer-link">+1 832 206 9137</a></li>
                             <li><FaPhoneAlt className="footer-icon" /> <a href="tel:+18322065663" className="footer-link">+1 832 206 5663</a></li>
                             <li><FaEnvelope className="footer-icon" /> <a href="mailto:info@zestinetech.com" className="footer-link">info@zestinetech.com</a></li>
                         </ul>
@@ -130,9 +130,9 @@ export function Footer() {
                         </div>
                         <div className="action-item">
                             <span className="action-label">Phone Number</span>
-                            <a href="tel:+17175882267" className="action-value footer-link">
+                            <a href="tel:+18322069137" className="action-value footer-link">
                                 <FaPhoneAlt />
-                                +1 717 588 2267
+                                +1 832 206 9137
                             </a>
                         </div>
                     </div>
